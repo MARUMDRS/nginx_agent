@@ -1,53 +1,62 @@
-# nginx_agent
+# nginx\_agent
 
-**nginx_agent** is an AI-powered CLI assistant that helps you generate, explain, lint, and manage NGINX configuration files. It uses a local [Mistral](https://mistral.ai) model (via [Ollama](https://ollama.com)) and DuckDuckGo search to bring you documentation-aware, customizable configurations — fast.
+**nginx\_agent** is a stylish, AI-powered CLI assistant that helps you generate, explain, edit, lint, and manage NGINX configuration files. It uses a local [Mistral](https://mistral.ai) model (via [Ollama](https://ollama.com)) and DuckDuckGo search to provide documentation-aware, secure, and customizable configurations — fast. 
 
->  This project uses the Mistral model specifically for generating and modifying NGINX configurations through natural language prompts.
+> This project uses the Mistral model specifically for generating and editing NGINX configurations with doc-based reasoning, enhanced by live searches from official [nginx.org](https://nginx.org/en/docs/).
 
-![screenshot](screenshot.png)  <!-- optional preview -->
+
 
 ---
 
 ##  Features
 
-- 🔧 Generate NGINX config files for:
-  - Reverse proxy
-  - Forward proxy
-  - Load balancing
-  - SSL termination
-  - Static file hosting
-  - Security headers and rate limiting
-  - Docker Compose-based microservices
+-  Interactive config generation for:
 
-- 💬 Interact with Mistral (via Ollama) to explain or modify the config
-- 🔍 Search official [nginx.org](https://nginx.org/en/docs/) docs with DuckDuckGo
-- 💾 Save and lint files using `nginx -t`
-- 📄  TUI with [Questionary](https://github.com/tmbo/questionary) and [Rich](https://github.com/Textualize/rich)
+  - Static Content Serving
+  - Reverse Proxy
+  - Load Balancing (Round Robin, Least Connections, IP Hash)
+  - SSL/TLS Termination
+  - FastCGI/SCGI/uWSGI Proxying
+  - WebSocket Proxying
+  - HTTP Caching
+  - API Gateway (with JWT or API Key support)
+  - Mail Proxy (IMAP, POP3, SMTP)
+  - Security Enhancements (rate limiting, CSP, etc.)
+  - Custom configuration prompts
+
+-  Context-aware answers and code generation using DuckDuckGo and BeautifulSoup to scrape only the meaningful `<div id="content">`
+
+-  Cached documentation lookup from multiple sources
+
+-  Formatted and commented config output using shell-style comments
+
+-  Linting using `nginx -t`
+
+-  Terminal UI built with [Questionary](https://github.com/tmbo/questionary) and [Rich](https://github.com/Textualize/rich)
+
+-  Supports full edits to existing configs via chat or raw editing
+
+-  Session state stored in memory for interactive workflows
 
 ---
-
+![screenshot](screenshot.png)  <!-- optional preview -->
 ##  Installation
 
-### 1. Install dependencies
+### 1. Install requirements
 
 ```bash
-# Python
 pip install -r requirements.txt
-
-# NGINX (for linting)
-sudo apt install nginx  # or brew install nginx on macOS
-
-# Ollama (for running Mistral)
-https://ollama.com/download
+sudo apt install nginx        # Or use brew install nginx on macOS
 ```
 
-### 2. Pull the Mistral model for Ollama
+### 2. Download Ollama and pull Mistral
+
 ```bash
+# https://ollama.com/download
 ollama pull mistral
 ```
 
-### 3. Setup your environment
-Create a `.env` file in the root:
+### 3. Create .env file
 
 ```env
 OLLAMA_MODEL=mistral
@@ -55,47 +64,54 @@ OLLAMA_MODEL=mistral
 
 ---
 
-##  Example usage
+## 🔬 Usage
 
-### Reverse Proxy
+Launch the tool:
 
 ```bash
 python main.py
 ```
-Then choose:
+
+Follow prompts like:
+
 ```
-1. Reverse Proxy
-Domain name: my_server.lab
-Backend server: http://127.0.0.1:3000
+3. Load Balancing
+Enter comma-separated backend URLs: http://1.1.1.1, http://2.2.2.2
+Choose method: Round Robin
+Enable health checks? Yes
 ```
 
-The tool will generate a config like:
+Example generated config:
 
 ```nginx
+# Define upstream
+upstream backend_servers {
+    server 1.1.1.1;
+    server 2.2.2.2;
+}
+
 server {
     listen 80;
-    server_name my_server.lab;
-
     location / {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://backend_servers;
+        # Add headers and timeouts here...
     }
 }
 ```
 
-You can then:
-- Explain the config
-- Edit it
-- Lint it
-- Save it
-- Ask Mistral to modify it (e.g. "add CORS headers")
+### After generation you can:
+
+-  Explain the config
+- Edit or rewrite via AI
+- Save as `nginx.conf`
+- Search nginx.org
+- Lint with `nginx -t`
 
 ---
 
 ##  Docker Compose Support
 
-Choose "8. From Docker Compose" to scan a `docker-compose.yml` like:
+Choose "From Docker Compose" to analyze your `docker-compose.yml`, for example:
 
 ```yaml
 services:
@@ -110,7 +126,16 @@ services:
       - "3000:3000"
 ```
 
-And receive a reverse proxy config
+And get a matching proxy config automatically.
+
+---
+
+##  Smart Prompting & Search
+
+- Prompts generated with detailed context-aware options
+- Search hint is extracted from the menu choice
+- Real docs fetched from DuckDuckGo and nginx.org
+- Uses cache in `.cache/` folder for repeat performance
 
 ---
 
@@ -122,7 +147,19 @@ questionary
 dotenv
 ollama
 duckduckgo-search
+beautifulsoup4
 pyyaml
+requests
 ```
 
 ---
+
+##  Relevant Links
+
+- [Mistral](https://mistral.ai) for the base model
+- [Ollama](https://ollama.com) for local inference
+- [nginx.org](https://nginx.org/en/docs/) for authoritative documentation
+
+---
+
+Built as a side project to explore the synergy between AI agents and intelligent web crawling for practical developer tooling.

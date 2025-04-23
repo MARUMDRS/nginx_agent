@@ -1,6 +1,8 @@
 rich
 questionary
-python-dotenv
+dotenv
 ollama
 duckduckgo-search
+beautifulsoup4
 pyyaml
+requests
