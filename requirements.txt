@@ -1,0 +1,6 @@
+rich
+questionary
+python-dotenv
+ollama
+duckduckgo-search
+pyyaml

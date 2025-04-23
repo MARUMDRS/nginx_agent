@@ -1,0 +1,14 @@
+# docker-compose.simple.yml
+version: "3.8"
+
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+
+  app:
+    image: node:18
+    command: node -e "require('http').createServer((_,res)=>res.end('Hello from App')).listen(3000)"
+    ports:
+      - "3000:3000"
