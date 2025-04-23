@@ -74,7 +74,7 @@ The tool will generate a config like:
 ```nginx
 server {
     listen 80;
-    server_name pantos.gr;
+    server_name my_server.lab;
 
     location / {
         proxy_pass http://127.0.0.1:3000;
