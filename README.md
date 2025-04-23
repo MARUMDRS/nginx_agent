@@ -22,7 +22,7 @@
 - 💬 Interact with Mistral (via Ollama) to explain or modify the config
 - 🔍 Search official [nginx.org](https://nginx.org/en/docs/) docs with DuckDuckGo
 - 💾 Save and lint files using `nginx -t`
-- 📄 Colorful, professional TUI with [Questionary](https://github.com/tmbo/questionary) and [Rich](https://github.com/Textualize/rich)
+- 📄  TUI with [Questionary](https://github.com/tmbo/questionary) and [Rich](https://github.com/Textualize/rich)
 
 ---
 
@@ -110,7 +110,7 @@ services:
       - "3000:3000"
 ```
 
-And you will receive a reverse proxy config
+And receive a reverse proxy config
 
 ---
 
