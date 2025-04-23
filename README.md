@@ -2,13 +2,13 @@
 
 **nginx_agent** is an AI-powered CLI assistant that helps you generate, explain, lint, and manage NGINX configuration files. It uses a local [Mistral](https://mistral.ai) model (via [Ollama](https://ollama.com)) and DuckDuckGo search to bring you documentation-aware, customizable configurations — fast.
 
-> 🧠 This project uses the Mistral model specifically for generating and modifying NGINX configurations through natural language prompts.
+>  This project uses the Mistral model specifically for generating and modifying NGINX configurations through natural language prompts.
 
 ![screenshot](screenshot.png)  <!-- optional preview -->
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 🔧 Generate NGINX config files for:
   - Reverse proxy
@@ -26,7 +26,7 @@
 
 ---
 
-## 🛠️ Installation
+##  Installation
 
 ### 1. Install dependencies
 
@@ -55,7 +55,7 @@ OLLAMA_MODEL=mistral
 
 ---
 
-## 🧪 Example usage
+##  Example usage
 
 ### Reverse Proxy
 
@@ -65,7 +65,7 @@ python main.py
 Then choose:
 ```
 1. Reverse Proxy
-Domain name: pantos.gr
+Domain name: my_server.lab
 Backend server: http://127.0.0.1:3000
 ```
 
@@ -93,7 +93,7 @@ You can then:
 
 ---
 
-## 🐳 Docker Compose Support
+##  Docker Compose Support
 
 Choose "8. From Docker Compose" to scan a `docker-compose.yml` like:
 
@@ -110,11 +110,11 @@ services:
       - "3000:3000"
 ```
 
-And receive a multi-service reverse proxy config!
+And you will receive a reverse proxy config
 
 ---
 
-## 📦 Dependencies
+##  Dependencies
 
 ```text
 rich
@@ -126,34 +126,3 @@ pyyaml
 ```
 
 ---
-
-## 🧑‍💻 Project Structure
-```
-├── main.py              # Entry point
-├── menu.py              # CLI menu and interaction
-├── agent.py             # AI logic and config generation
-├── .env                 # Ollama model env var
-├── requirements.txt     # Python deps
-└── docker-compose.yml   # Optional test config
-```
-
----
-
-## 📣 Future Ideas
-- Save/load templates
-- Generate SSL certs with Let's Encrypt
-- Export docs
-- Auto detect running containers
-
----
-
-## 🧠 Powered by
-- Mistral via [Ollama](https://ollama.com)
-- DuckDuckGo search
-- Python, Rich, and Questionary
-
----
-
-## 📜 License
-MIT License
-
