@@ -6,10 +6,9 @@ from crawler import get_docs_for_prompt
 
 load_dotenv()
 
-# Model name from the environment variable
+# Model name from the .env 
 MODEL_NAME = os.getenv("OLLAMA_MODEL", "mistral")
 
-# System prompt 
 system_prompt = """You are NGINX_configurator, an expert assistant in configuring NGINX.
 Your role is to guide users in setting up secure and correct nginx.conf files.
 Always include the actual nginx.conf configuration block as part of your response.
@@ -38,7 +37,6 @@ def ask_agent(user_prompt):
     )
     return response["message"]["content"]
 
-
 def ask_with_docs(user_prompt, doc_topic=None):
     # Use concise topic for searching, full prompt for answering
     search_query = doc_topic or user_prompt[:80]
@@ -49,8 +47,6 @@ def ask_with_docs(user_prompt, doc_topic=None):
     #print(f"\n Final Prompt Sent to Model:\n{'-' * 40}\n{prompt}\n{'-' * 40}\n")
     response = ask_agent(prompt)
     return response
-
-
 
 def generate_from_docker_compose(path_to_yml):
     if not os.path.exists(path_to_yml):

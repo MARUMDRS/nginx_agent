@@ -101,8 +101,6 @@ def get_prompt_by_choice(choice):
         return f"Custom request: {description}. Add comments, follow security best practices, and link to official docs."
     return None
 
-
-
 def main_menu():
     global current_config
 
@@ -167,21 +165,18 @@ def main_menu():
                     if sub == "1. Explain Config":
                         explanation = ask_agent(f"Explain this config line-by-line:\n{current_config}")
                         rprint(Panel.fit(explanation, title="Explanation"))
-
                     elif sub == "2. Save Config":
                         try:
                             filename = questionary.text("Save as (default: nginx.conf):").ask() or "nginx.conf"
                             save_config(current_config, filename)
                         except KeyboardInterrupt:
                             rprint("[yellow]Cancelled saving.[/yellow]")
-
                     elif sub == "3. Lint Config":
                         try:
                             filename = questionary.text("Lint file (default: nginx.conf):").ask() or "nginx.conf"
                             lint_config(filename)
                         except KeyboardInterrupt:
                             rprint("[yellow]Cancelled linting.[/yellow]")
-
                     elif sub == "4. Search Docs":
                         try:
                             query = questionary.text("What do you want to look up on nginx.org?").ask()
@@ -189,7 +184,6 @@ def main_menu():
                             rprint(Panel.fit(answer, title="AI Answer from nginx.org Docs", style="bold green"))
                         except KeyboardInterrupt:
                             rprint("[yellow]Cancelled docs search.[/yellow]")
-
                     elif sub == "5. Chat with AI":
                         try:
                             chat_input = questionary.text("What change do you want to make to the current config?").ask()
@@ -199,23 +193,19 @@ def main_menu():
                             rprint(Panel.fit(current_config, title="Modified Config", style="bold blue"))
                         except KeyboardInterrupt:
                             rprint("[yellow]Chat cancelled.[/yellow]")
-
                     elif sub == "6. Edit Config":
                         rprint(Panel.fit(current_config, title="Current Config", style="cyan"))
                         edit_description = questionary.text("Describe what you want to change in the config:").ask()
                         if edit_description is None:
                             rprint("[yellow]Edit cancelled.[/yellow]")
                             continue
-
                         full_edit_prompt = (
                             f"Here is my current config:\n{current_config}\n\n"
                             f"Please modify it as follows:\n{edit_description}"
                         )
-
                         response = ask_agent(full_edit_prompt)
                         current_config = response  # overwrite with updated config
                         rprint(Panel.fit(response, title="Modified Config", style="bold blue"))
-
                     elif sub == "7. Back":
                         break
 
