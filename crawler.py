@@ -9,14 +9,14 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 
 def search_nginx_docs(query, max_results=3):
     # Debug purposes
-    print(f"[🔍] Searching DuckDuckGo for: {query} site:nginx.org/en/docs/")  
+    print(f"Searching DuckDuckGo for: {query} site:nginx.org/en/docs/")  
     results = []
     with DDGS() as ddgs:
         for r in ddgs.text(f"{query} site:nginx.org/en/docs/"):
             results.append(r)
             if len(results) >= max_results:
                 break
-    print("🔍 Found results:")
+    print("Found results:")
     for r in results:
         print(f"• {r.get('title')} - {r.get('href')}")
     return results
